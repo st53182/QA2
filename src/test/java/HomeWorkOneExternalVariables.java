@@ -8,7 +8,7 @@ public class HomeWorkOneExternalVariables {
     public static void main(String[] args) {
 
         Loan loan1 = new Loan();
-        loan1.loanReqAmount = new BigDecimal("10000.00");
+        loan1.loanReqAmount = new BigDecimal("15000.00");
         loan1.manualTotalAmount = new BigDecimal("11000.00");
         loan1.loanCount();
     }
