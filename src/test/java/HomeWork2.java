@@ -18,6 +18,7 @@ public class HomeWork2 {
     private final By COMMENT_COUNT_COMMENT_PAGE_REG = By.xpath(".//li[@class = 'as-link is-active']//span[@class = 'type-cnt']");
 
 
+
     @Test
     public void articleTitleCommentCheck() {
 
@@ -40,7 +41,13 @@ public class HomeWork2 {
         // Take out integer from string
         commentCountMainPageTxt = commentCountMainPageTxt.replace("(", "");
         commentCountMainPageTxt = commentCountMainPageTxt.replace(")", "");
-        Integer commentCountMainPageInt = Integer.parseInt(commentCountMainPageTxt);
+        Integer commentCountMainPageInt;
+        if (commentCountMainPageTxt.equals("")) {
+            commentCountMainPageInt = 0;
+        } else {
+            commentCountMainPageInt = Integer.parseInt(commentCountMainPageTxt);
+        }
+
 
         // Click on Article
         driver.findElement(TITLE).click();
@@ -59,17 +66,22 @@ public class HomeWork2 {
         // Take out integer from string
         commentCountBrunchPageTxt = commentCountBrunchPageTxt.replace("(", "");
         commentCountBrunchPageTxt = commentCountBrunchPageTxt.replace(")", "");
-        Integer commentCountBrunchPageInt = Integer.parseInt(commentCountBrunchPageTxt);
+        Integer commentCountBrunchPageInt;
+        if (commentCountBrunchPageTxt.equals("")) {
+            commentCountBrunchPageInt = 0;
+        } else {
+            commentCountBrunchPageInt = Integer.parseInt(commentCountBrunchPageTxt);
+        }
 
 
         // Compare / Check article comments
-        Assertions.assertEquals(commentCountMainPageInt, commentCountBrunchPageInt,"Not equal");
+        Assertions.assertEquals(commentCountMainPageInt, commentCountBrunchPageInt, "Not equal");
 
         // Compare / Check article title
-        Assertions.assertEquals(homePageTitleTxt,brunchPageTitleTxt,"Not the Same, Punch Web programmer in the face");
+        Assertions.assertEquals(homePageTitleTxt, brunchPageTitleTxt, "Not the Same, Punch Web programmer in the face");
 
         //Click on comment link
-       driver.findElement(COMMENT_COUNT_BRUNCH_PAGE).click();
+        driver.findElement(COMMENT_COUNT_BRUNCH_PAGE).click();
 
         // Find Article Title
         WebElement commentPageTitle = driver.findElement(COMMENT_ARTICLE_TITLE);
@@ -95,17 +107,29 @@ public class HomeWork2 {
         commentCountAnonTxt = commentCountAnonTxt.replace(")", "");
         commentCountRegTxt = commentCountRegTxt.replace("(", "");
         commentCountRegTxt = commentCountRegTxt.replace(")", "");
-        Integer commentCountAnonInt = Integer.parseInt(commentCountAnonTxt);
-        Integer commentCountRegInt = Integer.parseInt(commentCountRegTxt);
+        Integer commentCountAnonInt;
+        Integer commentCountRegInt;
+        if (commentCountAnonTxt.equals("")) {
+            commentCountAnonInt = 0;
+        } else {
+            commentCountAnonInt = Integer.parseInt(commentCountAnonTxt);
+        }
+        if (commentCountRegTxt.equals("")) {
+            commentCountRegInt = 0;
+        } else {
+            commentCountRegInt = Integer.parseInt(commentCountRegTxt);
+        }
 
         // Total count
         Integer totalCommentCount = commentCountAnonInt + commentCountRegInt;
         // Compare
-        Assertions.assertEquals(commentCountBrunchPageInt,totalCommentCount,"not equal");
+        Assertions.assertEquals(commentCountBrunchPageInt, totalCommentCount, "not equal");
     }
-    @AfterEach
-    public void closeBrowser(){
+        @AfterEach
+        public void closeBrowser()
+    {
             driver.close();
+        }
+
 
     }
-}
