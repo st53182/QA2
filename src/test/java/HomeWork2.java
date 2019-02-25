@@ -18,7 +18,6 @@ public class HomeWork2 {
     private final By COMMENT_COUNT_COMMENT_PAGE_REG = By.xpath(".//li[@class = 'as-link is-active']//span[@class = 'type-cnt']");
 
 
-
     @Test
     public void articleTitleCommentCheck() {
 
@@ -125,11 +124,11 @@ public class HomeWork2 {
         // Compare
         Assertions.assertEquals(commentCountBrunchPageInt, totalCommentCount, "not equal");
     }
-        @AfterEach
-        public void closeBrowser()
-    {
-            driver.close();
-        }
 
-
+    @AfterEach
+    public void closeBrowser() {
+        driver.close();
     }
+
+
+}
