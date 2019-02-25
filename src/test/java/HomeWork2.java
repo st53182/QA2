@@ -23,20 +23,28 @@ public class HomeWork2 {
 
         // Add chrome driver
         System.setProperty("webdriver.chrome.driver", "C://Users/754794/Desktop/chromedriver_win32/chromedriver.exe");
+
         // Open browser
         driver = new ChromeDriver();
+
         // Switch it to the Full screen
         driver.manage().window().fullscreen();
+
         // Navigate to delfi.lv page
         driver.get(URL);
+
         // Find first article Title
         WebElement homePageTitle = driver.findElement(TITLE);
+
         // Save it to String
         String homePageTitleTxt = homePageTitle.getText();
+
         // Find comment count on main page
         WebElement commentCountMainPage = driver.findElement(COMMENT_COUNT_MAIN_PAGE);
+
         // Save it to String
         String commentCountMainPageTxt = commentCountMainPage.getText();
+
         // Take out integer from string
         commentCountMainPageTxt = commentCountMainPageTxt.replace("(", "");
         commentCountMainPageTxt = commentCountMainPageTxt.replace(")", "");
@@ -47,9 +55,9 @@ public class HomeWork2 {
             commentCountMainPageInt = Integer.parseInt(commentCountMainPageTxt);
         }
 
-
         // Click on Article
         driver.findElement(TITLE).click();
+
         // Find Article Title
         WebElement brunchPageTitle = driver.findElement(BRUNCH_TITLE);
 
@@ -72,7 +80,6 @@ public class HomeWork2 {
             commentCountBrunchPageInt = Integer.parseInt(commentCountBrunchPageTxt);
         }
 
-
         // Compare / Check article comments
         Assertions.assertEquals(commentCountMainPageInt, commentCountBrunchPageInt, "Not equal");
 
@@ -93,9 +100,9 @@ public class HomeWork2 {
 
         // Find comment count on comment page (Annonimie)
         WebElement commentCountAnon = driver.findElement(COMMENT_COUNT_COMMENT_PAGE_ANON);
+
         // Find comment count on comment page (Registretie)
         WebElement commentCountReg = driver.findElement(COMMENT_COUNT_COMMENT_PAGE_REG);
-
 
         // Save it to String
         String commentCountAnonTxt = commentCountAnon.getText();
@@ -121,6 +128,7 @@ public class HomeWork2 {
 
         // Total count
         Integer totalCommentCount = commentCountAnonInt + commentCountRegInt;
+        
         // Compare
         Assertions.assertEquals(commentCountBrunchPageInt, totalCommentCount, "not equal");
     }
