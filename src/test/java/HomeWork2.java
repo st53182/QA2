@@ -22,7 +22,7 @@ public class HomeWork2 {
     public void articleTitleCommentCheck() {
 
         // Add chrome driver
-        System.setProperty("webdriver.chrome.driver", "C://Users/754794/Desktop/chromedriver_win32/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");
 
         // Open browser
         driver = new ChromeDriver();
