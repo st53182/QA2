@@ -27,7 +27,7 @@ public class HomeWork3 {
         driver.get(URL);
 
         List<WebElement> articlesMainPage = driver.findElements(ARTICLEMAINPAGE);
-        Article articleMainPage = getArticle(articlesMainPage, 5);
+        Article articleMainPage = getArticle(articlesMainPage, 3);
 
         String mainPageTitleTxt = articleMainPage.getTitle();
         Integer mainPageCommentCountInt = articleMainPage.getCommentCount();
@@ -35,12 +35,12 @@ public class HomeWork3 {
         System.out.println(mainPageTitleTxt);
         System.out.println(mainPageCommentCountInt);
 
-        String mainPageTitleTxtMod = mainPageTitleTxt.substring(0,mainPageTitleTxt.length()-1);
+        String mainPageTitleTxtMod = mainPageTitleTxt.substring(0, mainPageTitleTxt.length() - 1);
 
         driver.findElement(By.linkText(mainPageTitleTxtMod)).click();
 
         List<WebElement> articlesMidPage = driver.findElements(ARTICLEMIDPAGE);
-        Article articleMidPage = getArticle(articlesMidPage,0);
+        Article articleMidPage = getArticle(articlesMidPage, 0);
 
         String midPageTitleTxt = articleMidPage.getTitle();
         Integer midPageCommentCountInt = articleMidPage.getCommentCount();
@@ -48,75 +48,32 @@ public class HomeWork3 {
         System.out.println(midPageTitleTxt);
         System.out.println(midPageCommentCountInt);
 
-        Assertions.assertEquals(mainPageTitleTxt,midPageTitleTxt,"Title on main page and mid page are not equal");
-        Assertions.assertEquals(mainPageCommentCountInt,midPageCommentCountInt,"Amount of comments on main page and mid page are not equal");
+        Assertions.assertEquals(mainPageTitleTxt, midPageTitleTxt, "Title on main page and mid page are not equal");
+        Assertions.assertEquals(mainPageCommentCountInt, midPageCommentCountInt, "Amount of comments on main page and mid page are not equal");
 
 
         driver.findElement(By.partialLinkText(midPageCommentCountInt.toString())).click();
 
         List<WebElement> articlesCommentPage = driver.findElements(ARTICLECOMMENTPAGE);
 
-        Article articleCommentPage = getArticle(articlesCommentPage,0);
+        Article articleCommentPage = getArticle(articlesCommentPage, 0);
 
         String commentPageTitleTxt = articleCommentPage.getTitle();
 
 
         System.out.println(commentPageTitleTxt);
 
-        // Find comment count on comment page (Annonimie)
-        WebElement commentCountAnon = driver.findElement(COMMENT_COUNT_COMMENT_PAGE_ANON);
-
-        // Find comment count on comment page (Registretie)
-        WebElement commentCountReg = driver.findElement(COMMENT_COUNT_COMMENT_PAGE_REG);
-
-        String commentCountAnonTxt = commentCountAnon.getText();
-        String commentCountRegTxt = commentCountReg.getText();
-
-
-
         // Take out integer from string
-        Integer commentCountAnonInt;
-        Integer commentCountRegInt;
+        Integer commentCountAnonInt = articleCommentPage.getAnonCommentCountCommentPage();
 
-        if (commentCountAnonTxt.equals("")) {
-            commentCountAnonInt = 0;
-        }
-        else
-        {
-            commentCountAnonInt = Integer.parseInt(commentCountAnonTxt.substring(1,commentCountAnonTxt.length()-1));
-        }
-        if (commentCountRegTxt.equals("")) {
-            commentCountRegInt = 0;
-        }
-        else
-        {
-            commentCountRegInt = Integer.parseInt(commentCountRegTxt.substring(1,commentCountRegTxt.length()-1));
-        }
-
-        Assertions.assertEquals(midPageTitleTxt,commentPageTitleTxt,"Title on mid page and comment page are not equal");
-
-
+        Integer commentCountRegInt = articleCommentPage.getRegCommentCountCommentPage();
 
         // Total count
         Integer totalCommentCount = commentCountAnonInt + commentCountRegInt;
 
         // Compare
+        Assertions.assertEquals(mainPageTitleTxt,commentPageTitleTxt,"Titles on a main page and Comment page are not equal");
         Assertions.assertEquals(mainPageCommentCountInt, totalCommentCount, "Amount of comments on main page and comment page are not equal");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -129,11 +86,30 @@ public class HomeWork3 {
 
         List<WebElement> commentCountersMainPage = selectedArticleMainPage.findElements(COMMENTCOUNT);
 
-        if(commentCountersMainPage.isEmpty())
-        {
+        List<WebElement> commentCountersAnonCommentPage = selectedArticleMainPage.findElements(COMMENT_COUNT_COMMENT_PAGE_ANON);
+
+        // Find comment count on comment page (Registretie)
+
+        List<WebElement> commentCountersRegCommentPage = selectedArticleMainPage.findElements(COMMENT_COUNT_COMMENT_PAGE_REG);
+
+        if (commentCountersAnonCommentPage.isEmpty()) {
+            currentArticle.setAnonCommentCountCommentPage(0);
+        } else {
+            currentArticle.setAnonCommentCountCommentPage(commentCountersAnonCommentPage.get(0).getText());
+
+        }
+
+        if (commentCountersRegCommentPage.isEmpty()) {
+            currentArticle.setRegCommentCountCommentPage(0);
+        } else {
+            currentArticle.setRegCommentCountCommentPage(commentCountersRegCommentPage.get(0).getText());
+
+        }
+
+
+        if (commentCountersMainPage.isEmpty()) {
             currentArticle.setCommentCount(0);
-        } else
-        {
+        } else {
             currentArticle.setCommentCount(commentCountersMainPage.get(0).getText());
 
         }
